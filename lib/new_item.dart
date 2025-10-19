@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/data/categories.dart';
 import 'package:shopping_list/data/items.dart';
+import "package:http/http.dart" as http ;
+import 'dart:convert';
 
 class NewItem extends StatefulWidget
 {
@@ -16,6 +18,7 @@ class _NewItemState extends State<NewItem>
   String name="";
   int quantity=0;
   var category=categories[Categories.vegetables]!;
+  int isSending=0;
   
 
 
@@ -99,19 +102,33 @@ class _NewItemState extends State<NewItem>
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(onPressed: (){
+                TextButton(onPressed: isSending==0? (){
                   formKey.currentState!.reset();
-                }, child: Text("Reset")),
-                ElevatedButton(onPressed: (){
+                } : null, child: Text("Reset")),
+                ElevatedButton(onPressed: isSending==0 ? () async {
                   if(formKey.currentState!.validate())
                   {
+                      final url=Uri.https("grocery-listapp-default-rtdb.firebaseio.com","list.json");
                       formKey.currentState!.save();
-                      Navigator.of(context).pop(GroceryItem(id: DateTime.now().toString(), name: name, quantity: quantity, category: category));
+                      setState(() {
+                        isSending=1;
+                      });
+                      final response=await http.post(url, headers: {
+                        "Content-Type":"application/json"
+                      }, body: json.encode({
+                        "name": name, "quantity": quantity, "category": category.title
+                      }));
+                      if(!context.mounted)
+                      {
+                        return;
+                      }
+                      final Map<String, dynamic> dat=json.decode(response.body);
+                      Navigator.of(context).pop(GroceryItem(id: dat["name"], name: name, quantity: quantity, category: category));
                       print(name);
                       print(quantity);
                       print(category);
                   }
-                }, child: Text("Add item"))
+                }:null, child: isSending==0? Text("Add item"):Text("Adding"))
               ],
             )
             ],
