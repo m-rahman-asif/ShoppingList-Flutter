@@ -1,16 +1,25 @@
-# shopping_list
+# ShoppingList
 
-A new Flutter project.
+A simple and elegant Flutter app to manage your daily groceries efficiently. Users can add, view, and delete grocery items with category selection and quantity input. Built with Flutter’s Material 3 design, featuring a dark theme and an intuitive interface.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+➕ Add new grocery items with name, quantity, and category
 
-A few resources to get you started if this is your first Flutter project:
+🧾 View all items in a clean, color-coded list
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+🗑️ Swipe to delete any item easily
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+✅ Built-in form validation for accurate input
+
+🎨 Modern dark-themed UI using Material 3
+
+⚙️ Modular code structure and stateful widgets
+
+## Tech Stack
+
+Framework: Flutter
+
+Language: Dart
+
+UI: Material 3 (Dark Theme)
